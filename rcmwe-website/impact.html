@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1424">
+<title>Impact — Rotaract Club of Mumbai Western Elite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:oklch(0.17 0.028 262);--surface:oklch(0.215 0.032 262);--fg:oklch(0.965 0.006 90);
+  --muted:oklch(0.72 0.02 255);--border:oklch(0.31 0.025 262);
+  --accent-a:#ffc5dc;--accent-b:#fd86db;--ember:#e44f21;
+  --grad-dawn:linear-gradient(180deg,#ffc5dc 0%,#fd86db 58%,#e44f21 130%);
+  --font-display:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --font-body:'Inter',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --orb-reveal:cubic-bezier(.16,1,.3,1);--orb-soft:cubic-bezier(.25,.8,.28,1);
+  --nav-h:76px;--gut:clamp(20px,3.5vw,55px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent-b);color:#14101c}
+:focus-visible{outline:2px solid var(--accent-b);outline-offset:3px;border-radius:4px}
+img,svg{display:block}a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.wrap{width:min(1240px,calc(100% - var(--gut)*2));margin-inline:auto}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:0}
+.eyebrow .tick{color:var(--ember)}
+
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:40;border-bottom:1px solid transparent;background:transparent;transition:background .35s var(--orb-soft),border-color .35s var(--orb-soft)}
+.site-nav.scrolled{background:oklch(0.17 0.028 262 / .78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom-color:var(--border)}
+.nav-inner{display:flex;align-items:center;gap:clamp(16px,2.4vw,34px);height:var(--nav-h)}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto;min-width:0}
+.brand-seal{flex:0 0 auto;display:block;width:50px;height:50px}
+.brand-seal img{width:100%;height:100%;object-fit:contain}
+.brand-text strong{display:block;font-family:var(--font-display);font-weight:400;font-size:18px;line-height:1.1;white-space:nowrap}
+.brand-text small{display:block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.nav-links{display:flex;align-items:center;gap:clamp(12px,1.8vw,28px)}
+.nav-links a{position:relative;font-size:14px;font-weight:500;color:var(--muted);padding:9px 2px;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:4px;height:1px;background:var(--ember);transition:right .32s var(--orb-reveal)}
+.nav-links a:hover,.nav-links a[data-active]{color:var(--fg)}
+.nav-links a:hover::after,.nav-links a[data-active]::after{right:0}
+.pill-cta{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:999px;background:oklch(0.97 0.004 90);color:#12151f;font-weight:600;font-size:14px;transition:transform .28s var(--orb-soft),background .25s}
+.pill-cta:hover{transform:scale(1.04);background:oklch(0.90 0.006 90)}
+.burger{display:none;width:46px;height:46px;border-radius:50%;background:oklch(0.97 0.004 90);place-items:center;gap:5px;flex-direction:column;margin-left:auto}
+.burger span{display:block;width:18px;height:2px;background:#12151f;border-radius:2px}
+.scrim{position:fixed;inset:0;z-index:49;background:oklch(0.08 0.02 262 / .6);opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;top:0;right:0;bottom:0;z-index:50;width:min(370px,90vw);background:oklch(0.19 0.03 262 / .82);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);border-left:1px solid var(--border);padding:26px 28px;display:flex;flex-direction:column;transform:translateX(102%);transition:transform .45s var(--orb-reveal)}
+.sheet.open{transform:none}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+.sheet-close{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;font-size:18px}
+.sheet-links{display:flex;flex-direction:column}
+.sheet-links a{font-family:var(--font-display);font-size:34px;line-height:1.35;padding:6px 0;border-bottom:1px solid oklch(0.31 0.025 262 / .5)}
+.sheet-links a span{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--muted);vertical-align:super;margin-right:10px}
+.sheet-links a[data-active]{background:var(--grad-dawn);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sheet-join{margin-top:28px;display:inline-flex;justify-content:center;align-items:center;height:52px;border-radius:999px;background:oklch(0.97 0.004 90);color:#12151f;font-weight:600}
+.sheet-meta{margin-top:auto;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:2}
+
+.page-hero{padding-top:calc(var(--nav-h) + clamp(48px,9svh,110px));padding-bottom:clamp(30px,4vw,52px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,3.2vw,52px);align-items:center}
+.hero-copy{order:2}.dotfield{order:1}
+.page-title{font-family:var(--font-display);font-weight:400;font-size:clamp(42px,6.6vw,92px);line-height:1;letter-spacing:-0.015em;margin:16px 0 0;max-width:15ch}
+.page-title em{font-style:italic;background:var(--grad-dawn);-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-sub{color:var(--muted);max-width:50ch;margin-top:20px;font-size:clamp(15.5px,1.3vw,18px)}
+
+/* ---- dawn dot-field ---- */
+.dotfield{position:relative;width:clamp(270px,31vw,470px);aspect-ratio:1/1.04;user-select:none;-webkit-user-select:none;pointer-events:none}
+.dotfield canvas{width:100%;height:100%;display:block}
+.df-cap{position:absolute;left:12px;bottom:10px;font-family:var(--font-mono);font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+  border-left:1px solid oklch(0.42 0.03 262);padding-left:9px;line-height:1.7}
+@media (max-width:780px){
+  .page-hero{grid-template-columns:1fr;gap:26px}
+  .hero-copy{order:1}.dotfield{order:2;width:min(320px,86vw);margin-inline:0;aspect-ratio:1/0.9}
+}
+
+.filters{display:flex;flex-wrap:wrap;gap:10px;padding-block:6px clamp(28px,3.5vw,44px)}
+.fchip{display:inline-flex;align-items:center;gap:9px;height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--border);font-family:var(--font-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .25s,border-color .25s,background .25s}
+.fchip b{font-weight:500;color:var(--fg)}
+.fchip:hover{border-color:oklch(0.47 0.05 330);color:var(--fg)}
+.fchip[aria-pressed="true"]{background:oklch(0.94 0.02 340);border-color:oklch(0.94 0.02 340);color:#201321}
+.fchip[aria-pressed="true"] b{color:#201321}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-bottom:clamp(48px,6vw,80px)}
+.pcard{text-align:left;display:flex;flex-direction:column;gap:13px;min-height:270px;padding:25px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(180deg,oklch(0.205 0.03 262 / .75),oklch(0.185 0.028 262 / .35));cursor:pointer;transition:transform .45s var(--orb-reveal),border-color .3s}
+.pcard:hover,.pcard:focus-visible{transform:translateY(-5px);border-color:oklch(0.47 0.05 330)}
+.tagrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.chip{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.date{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;color:var(--muted);white-space:nowrap}
+.pcard h3{font-family:var(--font-display);font-weight:400;font-size:25px;line-height:1.1;margin:2px 0 0}
+.stat-line{font-size:13.5px;color:var(--fg)}
+.stat-line b{color:var(--accent-b);font-weight:600}
+.snip{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
+.card-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;color:var(--fg);font-size:13px;font-weight:600}
+.card-foot .arr{transition:transform .35s var(--orb-reveal)}
+.pcard:hover .card-foot .arr{transform:translate(4px,-4px)}
+.up-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg)}
+.up-badge i{width:7px;height:7px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 0 oklch(0.66 0.19 29 / .55);animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px oklch(0.66 0.19 29 / 0)}100%{box-shadow:0 0 0 0 oklch(0.66 0.19 29 / 0)}}
+.empty{display:none;padding:60px 0;color:var(--muted);text-align:center;font-family:var(--font-display);font-size:26px}
+
+dialog.modal{border:1px solid var(--border);border-radius:22px;background:oklch(0.2 0.03 262);color:var(--fg);max-width:min(680px,calc(100vw - 40px));width:100%;padding:0;margin:auto}
+dialog.modal::backdrop{background:oklch(0.07 0.02 262 / .68);backdrop-filter:blur(6px)}
+.m-in{padding:clamp(24px,3.4vw,40px);overflow-y:auto;max-height:min(82vh,760px)}
+.m-tagrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;padding-right:56px}
+.m-close{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;font-size:17px;background:oklch(0.2 0.03 262)}
+.m-close:hover{background:oklch(0.26 0.036 262)}
+.modal h2{font-family:var(--font-display);font-weight:400;font-size:clamp(28px,3.4vw,42px);line-height:1.06;margin:0 0 18px;max-width:16ch}
+.m-meta{display:flex;flex-wrap:wrap;gap:8px 26px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-block:1px solid var(--border);padding-block:14px;margin-bottom:22px}
+.m-meta b{color:var(--fg);font-weight:500}
+.modal h4{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:22px 0 8px;font-weight:500}
+.modal p.body{margin:0;color:var(--fg);font-size:15.5px;line-height:1.7}
+.modal p.body.dim{color:var(--muted)}
+.modal p.body strong{color:var(--accent-b);font-weight:600}
+
+footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022 262);margin-top:8px}
+.foot-grid{display:grid;grid-template-columns:1.5fr .7fr .8fr;gap:clamp(28px,4vw,56px);padding-block:clamp(48px,6vw,72px) 44px}
+.foot-brand strong{display:block;font-family:var(--font-display);font-weight:400;font-size:26px;margin:16px 0 8px}
+.foot-brand p{color:var(--muted);font-size:14px;max-width:34ch;margin:0}
+.foot-col h4{font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;font-weight:500}
+.foot-col a,.foot-col span{display:block;padding:6px 0;font-size:14.5px;color:var(--muted);transition:color .25s}
+.foot-col a:hover{color:var(--fg)}
+.pending{color:var(--muted)!important;font-style:italic}
+.foot-meta{display:flex;flex-wrap:wrap;gap:8px 26px;justify-content:space-between;border-top:1px solid var(--border);padding-block:20px 26px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .75s var(--orb-soft),transform .75s var(--orb-reveal)}
+[data-reveal].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal],.pcard{opacity:1!important;transform:none!important;transition:none!important}
+  html{scroll-behavior:auto}.up-badge i{animation:none}
+}
+@media (max-width:1060px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:920px){
+  .nav-links,.pill-cta{display:none}.burger{display:flex}
+}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-page="impact">
+
+<header class="site-nav" id="siteNav" data-od-id="site-nav">
+  <div class="nav-inner wrap">
+    <a class="brand" href="index.html" data-od-id="brand-home">
+      <span class="brand-seal"><img src="assets/logo.svg" alt=""></span>
+      <span class="brand-text"><strong>Mumbai Western Elite</strong><small>Rotaract · RID 3141</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="impact.html" data-active data-od-id="nav-impact">Impact</a>
+      <a href="events.html">Events</a>
+      <a href="people.html">People</a>
+    </nav>
+    <a class="pill-cta" href="join.html" data-od-id="nav-join">Join Us</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<aside class="sheet" id="sheet" aria-label="Menu">
+  <div class="sheet-head">
+    <span class="brand-seal"><img src="assets/logo.svg" alt=""></span>
+    <button class="sheet-close" id="sheetClose" aria-label="Close menu">✕</button>
+  </div>
+  <nav class="sheet-links" aria-label="Mobile">
+    <a href="home.html"><span>01</span>Home</a>
+    <a href="about.html"><span>02</span>About</a>
+    <a href="impact.html" data-active><span>03</span>Impact</a>
+    <a href="events.html"><span>04</span>Events</a>
+    <a href="people.html"><span>05</span>People</a>
+    <a href="join.html"><span>06</span>Join</a>
+  </nav>
+  <a class="sheet-join" href="join.html">Join RCMWE</a>
+  <p class="sheet-meta">Rotaract Club of Mumbai<br>Western Elite · RID 3141<br>Est. June 2016</p>
+</aside>
+
+<main id="main">
+  <section class="page-hero wrap" data-od-id="impact-hero">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="tick">●</span>&nbsp;&nbsp;Impact record · July–August 2026</p>
+      <h1 class="page-title" data-od-id="impact-title">Twelve projects, <em>on the record.</em></h1>
+      <p class="page-sub">Every figure below is drawn from the club's own project reports — headcounts, kits, meals, rupees. Filter by avenue, open any card for the full brief.</p>
+    </div>
+    <div class="dotfield" id="dotfield" data-reveal data-od-id="hero-dot-field" aria-hidden="true">
+      <canvas id="dfCanvas"></canvas>
+      <p class="df-cap">Every dot is a person reached<br>move through the field</p>
+    </div>
+  </section>
+
+  <section class="wrap" id="projects" data-od-id="projects-section">
+    <div class="filters" role="group" aria-label="Filter projects by avenue" data-od-id="project-filters">
+      <button class="fchip" data-p="all" aria-pressed="true">All <b>· 12</b></button>
+      <button class="fchip" data-p="welfare" aria-pressed="false">Community Welfare <b>· 5</b></button>
+      <button class="fchip" data-p="climate" aria-pressed="false">Climate <b>· 2</b></button>
+      <button class="fchip" data-p="venture" aria-pressed="false">Fundraising <b>· 2</b></button>
+      <button class="fchip" data-p="fellowship" aria-pressed="false">Fellowship <b>· 3</b></button>
+    </div>
+    <div class="grid" id="grid" data-od-id="project-grid"></div>
+    <p class="empty" id="empty">No projects in this view yet.</p>
+  </section>
+</main>
+
+<dialog class="modal" id="modal" aria-labelledby="modalTitle">
+  <button class="m-close" id="modalClose" aria-label="Close details">✕</button>
+  <div class="m-in">
+    <div class="m-tagrow" id="modalTags"></div>
+    <h2 id="modalTitle"></h2>
+    <div class="m-meta" id="modalMeta"></div>
+    <h4>The brief</h4>
+    <p class="body dim" id="modalBrief"></p>
+    <h4>The impact</h4>
+    <p class="body" id="modalImpact"></p>
+    <p class="body dim" id="modalPartner" style="margin-top:14px"></p>
+  </div>
+</dialog>
+
+<footer class="site-foot" data-od-id="site-footer">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <span class="brand-seal"><img src="assets/logo.svg" alt="RCMWE emblem"></span>
+      <strong>Rotaract Club of Mumbai Western Elite</strong>
+      <p>"Be the Dawn. Make the Impact." — sponsored by the Rotary Club of Mumbai Western Elite, RID 3141.</p>
+    </div>
+    <div class="foot-col" data-od-id="footer-navigate">
+      <h4>Navigate</h4>
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="events.html">Events</a>
+      <a href="people.html">People</a>
+      <a href="join.html">Join</a>
+    </div>
+    <div class="foot-col" data-od-id="footer-connect">
+      <h4>The club</h4>
+      <span>RI District 3141</span>
+      <span>Parent: Rotary Club of Mumbai Western Elite</span>
+      <span class="pending">Instagram — handle announced soon</span>
+      <a href="join.html">Membership enquiries</a>
+    </div>
+  </div>
+  <div class="wrap foot-meta" data-od-id="footer-meta">
+    <span>© 2026 RCMWE · Club ID 213639</span>
+    <span>Chartered June 2016</span>
+    <span>Design prototype · figures from club records</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,c){return (c||document).querySelector(s)};
+var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* nav + sheet */
+var nav=$('#siteNav');
+function navState(){nav.classList.toggle('scrolled',window.scrollY>8);}
+window.addEventListener('scroll',navState,{passive:true});navState();
+var burger=$('#burger'),sheet=$('#sheet'),scrim=$('#scrim'),closeBtn=$('#sheetClose');
+var mainEls=$$('#main > *');
+function setInert(on){mainEls.forEach(function(el){try{el.toggleAttribute('inert',on);}catch(e){}});}
+function openSheet(){sheet.classList.add('open');scrim.classList.add('open');burger.setAttribute('aria-expanded','true');setInert(true);closeBtn.focus();}
+function closeSheet(){sheet.classList.remove('open');scrim.classList.remove('open');burger.setAttribute('aria-expanded','false');setInert(false);burger.focus();}
+burger.addEventListener('click',openSheet);
+closeBtn.addEventListener('click',closeSheet);
+scrim.addEventListener('click',closeSheet);
+document.addEventListener('keydown',function(e){
+  if(!sheet.classList.contains('open'))return;
+  if(e.key==='Escape'){closeSheet();return;}
+  if(e.key==='Tab'){
+    var f=$$('a[href],button',sheet).filter(function(el){return el.offsetParent!==null});
+    if(!f.length)return;
+    var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
+
+/* ---------- project data (from rcmwe-details.md) ---------- */
+var PILLARS={welfare:'Community Welfare',climate:'Climate',venture:'Fundraising',fellowship:'Fellowship'};
+var PROJECTS=[
+ {slug:'muskaan-stall',p:'venture',d:'04 JUL 2026',t:'Muskaan Exhibition Stall',
+  s:'₹11,000 raised',n:'800+ footfall',
+  snip:'Twelve hours of games, accessories and instant souvenir portraits at NESCO, Goregaon.',
+  brief:'A 12-hour interactive entertainment and merchandise stall managed during a Rotary-led exhibition at NESCO, Goregaon.',
+  imp:'Engaged attendees from an 800+ footfall with games, customized accessories and instant souvenir portraits, raising a net profit of ₹11,000 for club welfare projects.',
+  v:'NESCO, Goregaon',partner:'Rotary-led Muskaan exhibition'},
+ {slug:'baaghbaan',p:'welfare',d:'08 JUL 2026',t:'Baaghbaan — Senior Citizen Outreach',
+  s:'30+ senior citizens',n:'',
+  snip:'Music, companionship, games and nutrition gift packs at Assisi Bhavan.',
+  brief:'An intergenerational fellowship visit to the elderly residents of Assisi Bhavan, Aarey Road.',
+  imp:'Brought music, companionship, recreational games and nutrition gift packs to 30+ senior citizens.',
+  v:'Assisi Bhavan, Aarey Road',partner:''},
+ {slug:'pranic-healing',p:'fellowship',d:'03 JUL 2026',t:'Pranic Healing & Wellness Session',
+  s:'18 participants',n:'',
+  snip:'Drug-free breathing and stress-relief workshop at Tulip Hall, DB Woods.',
+  brief:'A drug-free holistic wellness workshop held at Tulip Hall, DB Woods.',
+  imp:'Provided 18 participants with guided breathing techniques, stress-relief exercises and mental-health awareness.',
+  v:'Tulip Hall, DB Woods',partner:''},
+ {slug:'digital-id-rights',p:'welfare',d:'13 & 16 JUL 2026',t:'Grassroots Digital ID & Legal Rights Assistance',
+  s:'35 drivers educated',n:'25 workers onboarded to DigiLocker',
+  snip:'Legal-rights drives for transit drivers and DigiLocker onboarding for domestic workers.',
+  brief:'Ground-level legal and digital empowerment drives for transit drivers and domestic workers.',
+  imp:'Educated 35 local drivers on legal rights during road stops, and onboarded 25 grassroots workers onto DigiLocker to permanently secure their government identification documents.',
+  v:'Western suburbs transit hubs',partner:''},
+ {slug:'plantation-2',p:'climate',d:'12 JUL 2026',t:'Mega Plantation Drive 2.0',
+  s:'100+ native saplings',n:'',
+  snip:'Mass afforestation near Aarey Dairy, planted with our parent Rotary club.',
+  brief:'A mass afforestation drive organized near Aarey Dairy in collaboration with Rotary to counter urban heatwaves.',
+  imp:'Planted 100+ native saplings to restore and expand green cover across Mumbai\u2019s ecological hub.',
+  v:'Aarey Dairy belt',partner:'Rotary Club of Mumbai Western Elite'},
+ {slug:'aarey-drive',p:'welfare',d:'11 JUL 2026',t:'Mega Aarey Youth & Child Welfare Drive',
+  s:'90+ students educated',n:'112 stationery kits · 99 hot meal boxes',
+  snip:'Education, physical and digital safety, and nutrition relief across Aarey Milk Colony.',
+  brief:'A multi-module community empowerment outreach conducted across Aarey Milk Colony covering youth education, physical and digital safety, and direct nutritional relief.',
+  imp:'Educated 90+ students (Grades 3\u201311) on academic discipline, first-aid response, emergency hotlines and digital fraud prevention; distributed 112 essential stationery kits; served 99 hot multi-course nutritious meal boxes in collaboration with The Altruist Hotels.',
+  v:'Aarey Milk Colony',partner:'The Altruist Hotels'},
+ {slug:'empowerment-abled',p:'welfare',d:'14 JUL 2026',t:'Empowerment for Specially Abled Individuals',
+  s:'50+ students engaged',n:'',
+  snip:'Adapted cricket, dance therapy and body-boundary safety workshops at Shashi Mangalam School.',
+  brief:'An inclusive recreational and life-skills camp hosted at Shashi Mangalam School.',
+  imp:'Engaged 50+ specially abled students through adapted cricket matches, dance therapy, digital screen-time guidance and body-boundary safety workshops.',
+  v:'Shashi Mangalam School',partner:''},
+ {slug:'seva-mahotsav',p:'venture',d:'15 JUL 2026',t:'Promotion of Seva Mahotsav',
+  s:'50K+ followers reached',n:'',
+  snip:'Creator campaign amplifying district service initiatives across Instagram.',
+  brief:'A targeted social media campaign amplifying district service initiatives.',
+  imp:'Partnered with digital creator Yashvi (@yashvii_a) to broadcast the message of social service across a digital audience of 50,000+ followers.',
+  v:'Digital campaign',partner:'Digital creator Yashvi (@yashvii_a)'},
+ {slug:'turf-wars',p:'fellowship',d:'19 JUL 2026',t:'Turf Wars',
+  s:'24 members fielded',n:'Football + cricket, randomized teams',
+  snip:'Back-to-back morning matches at Nidhivan Turf.',
+  brief:'A multi-sport morning featuring back-to-back football and cricket matches at Nidhivan Turf.',
+  imp:'Brought together 24 members across randomized teams to promote physical fitness and cross-board camaraderie.',
+  v:'Nidhivan Turf',partner:''},
+ {slug:'game-night',p:'fellowship',d:'09 AUG 2026',t:'Game Night & House Championship Launch',
+  s:'18 members inducted into houses',n:'Four-house year-long league begins',
+  snip:'The tournament that kicked off the club\u2019s year-long fellowship league.',
+  brief:'An interactive four-house tournament kicking off the club\u2019s year-long internal fellowship league.',
+  imp:'Engaged 18 Board and General Body members through team-building games, establishing strong club culture and active member retention.',
+  v:'Club game night',partner:''},
+ {slug:'freedom-bins',p:'welfare',d:'15 AUG 2026',t:'Freedom Bins — Civic Waste Management',
+  s:'100+ dustbins distributed',n:'',
+  snip:'Hook-fitted bins handed to auto-rickshaw drivers around Oberoi Mall for Independence Day.',
+  brief:'An Independence Day cleanliness campaign promoting the Swachh Bharat Mission around Oberoi Mall and Goregaon East.',
+  imp:'Distributed 100+ branded, hook-fitted dustbins directly to auto-rickshaw drivers to curb on-road passenger littering and promote clean urban transport.',
+  v:'Oberoi Mall & Goregaon East',partner:''},
+ {slug:'saviorthon',p:'climate',d:'23 AUG 2026',t:'Saviorthon 10K — Run for Nature',
+  s:'10 km charity run',n:'Registrations fund women\u2019s empowerment',
+  snip:'Charity marathon from Bandra Fort with 4Memories Event and Saksham Social Trust.',
+  brief:'A 10 km charity marathon held at Bandra Fort in association with 4Memories Event and Saksham Social Trust.',
+  imp:'Promoted ecological conservation and healthy living while channelling dedicated runner registration funds toward women\u2019s empowerment initiatives.',
+  v:'Bandra Fort',partner:'4Memories Event · Saksham Social Trust',up:true}
+];
+
+/* ---------- dawn dot-field ---------- */
+(function(){
+  var box=$('#dotfield');if(!box)return;
+  var cv=$('#dfCanvas'),cx=cv.getContext('2d');
+  var F={w:0,h:0,dpr:Math.min(window.devicePixelRatio||1,1.6),pts:[],t:0,mx:-9999,my:-9999,vis:true,raf:null,rips:[],lastRip:0};
+  function size(){
+    var r=box.getBoundingClientRect();if(!r.width)return;
+    F.w=r.width;F.h=r.height;
+    cv.width=Math.round(F.w*F.dpr);cv.height=Math.round(F.h*F.dpr);
+    cx.setTransform(F.dpr,0,0,F.dpr,0,0);
+    F.pts=[];var g=15;
+    for(var y=g*0.9;y<F.h-g*0.45;y+=g){
+      for(var x=g*0.9;x<F.w-g*0.45;x+=g){F.pts.push({x:x,y:y,ph:(x*0.045)+(Math.random()*1.4)});}
+    }
+  }
+  var hero=$('.page-hero');
+  if(hero&&window.matchMedia('(hover: hover)').matches){
+    hero.addEventListener('mousemove',function(e){
+      var r=box.getBoundingClientRect();
+      F.mx=e.clientX-r.left;F.my=e.clientY-r.top;
+    });
+    hero.addEventListener('mouseleave',function(){F.mx=F.my=-9999;});
+  }
+  function lerp(a,b,k){return a+(b-a)*k;}
+  function col(k,a){
+    var c0=[152,164,202],c1=[253,134,219];
+    var kk=Math.min(1,k*1.25);
+    return 'rgba('+Math.round(lerp(c0[0],c1[0],kk))+','+Math.round(lerp(c0[1],c1[1],kk))+','+Math.round(lerp(c0[2],c1[2],kk))+','+a.toFixed(3)+')';
+  }
+  function frame(now){
+    F.raf=null;if(!F.vis)return;
+    F.t=reduced?0.6:F.t+0.016;
+    var t=F.t,W=F.w,H=F.h,hz=H*0.66;
+    var scx=W*0.52+W*0.03*Math.sin(t*0.21);
+    var rise=H*(0.16+0.05*Math.sin(t*0.32));
+    var R=W*0.37,sy=hz-rise;
+    if(!reduced&&now-F.lastRip>2600){F.lastRip=now;F.rips.push({x:W*(0.18+Math.random()*0.64),y:hz-H*(0.04+Math.random()*0.42),b:now});}
+    for(var i=F.rips.length-1;i>=0;i--){if(now-F.rips[i].b>2400)F.rips.splice(i,1);}
+    cx.clearRect(0,0,W,H);
+    for(var i2=0;i2<F.pts.length;i2++){
+      var p=F.pts[i2];
+      var sea=p.y>hz;
+      var base=sea?1.05:1.35,al=sea?0.17:0.27;
+      var warm=0,rip=0;
+      if(!sea||p.y<hz+H*0.1){
+        var ds=Math.hypot(p.x-scx,p.y-sy);
+        warm=Math.max(0,1-ds/R);warm=warm*warm*(3-2*warm);
+        if(sea)warm*=0.55;
+      }
+      var dc=Math.hypot(p.x-F.mx,p.y-F.my);
+      if(dc<130){var cw=Math.exp(-(dc*dc)/(2*44*44));warm=Math.max(warm,cw);rip=cw;}
+      for(var j=0;j<F.rips.length;j++){
+        var rp=F.rips[j],rd=Math.abs(Math.hypot(p.x-rp.x,p.y-rp.y)-((now-rp.b)*0.075));
+        if(rd<15)rip=Math.max(rip,(1-rd/15)*(1-(now-rp.b)/2400));
+      }
+      var shim=sea?Math.sin(t*1.25+p.ph):0;
+      var rad=base+(sea?shim*0.28:0)+warm*1.95+rip*1.5;
+      var alpha=Math.min(0.95,al+warm*0.6+rip*0.3);
+      cx.beginPath();
+      cx.fillStyle=col(warm,alpha);
+      cx.arc(p.x,p.y,rad,0,6.2832);
+      cx.fill();
+    }
+    cx.strokeStyle='oklch(0.31 0.025 262)';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(6,hz);cx.lineTo(W-6,hz);cx.stroke();
+    F.raf=requestAnimationFrame(frame);
+  }
+  window.addEventListener('resize',function(){size();if(reduced)frame(performance.now());},{passive:true});
+  size();
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        F.vis=en.isIntersecting;
+        if(F.vis&&!F.raf&&!reduced)F.raf=requestAnimationFrame(frame);
+        if(F.vis&&reduced)frame(performance.now());
+      });
+    },{threshold:0}).observe(box);
+  }else{frame(performance.now());}
+})();
+
+/* render */
+var grid=$('#grid'),modal=$('#modal');
+function esc(x){return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+PROJECTS.forEach(function(p){
+  var el=document.createElement('article');
+  el.className='pcard';
+  el.setAttribute('tabindex','0');
+  el.setAttribute('role','button');
+   el.setAttribute('aria-haspopup','dialog');
+   el.setAttribute('aria-label',p.t+' — open project details');
+  el.setAttribute('data-p',p.p);
+  el.setAttribute('data-od-id','project-card-'+p.slug);
+  el.innerHTML=
+   '<div class="tagrow"><span class="chip">'+esc(PILLARS[p.p])+'</span>'+
+   (p.up?'<span class="up-badge"><i></i>Upcoming</span>':'<span class="date">'+esc(p.d)+'</span>')+'</div>'+
+   '<h3>'+esc(p.t)+'</h3>'+
+   '<p class="stat-line"><b>'+esc(p.s)+'</b>'+(p.n?' · '+esc(p.n):'')+'</p>'+
+   '<p class="snip">'+esc(p.snip)+'</p>'+
+   '<span class="card-foot">Open project <span class="arr" aria-hidden="true">↗</span></span>';
+  function act(){openProject(p);}
+  el.addEventListener('click',act);
+  el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}});
+  grid.appendChild(el);
+});
+$$('[data-reveal]').forEach(function(el){el.classList.add('in')});
+
+function openProject(p){
+  $('#modalTags').innerHTML='<span class="chip">'+esc(PILLARS[p.p])+'</span>'+(p.up?'<span class="up-badge"><i></i>Upcoming</span>':'');
+  $('#modalTitle').textContent=p.t;
+  $('#modalMeta').innerHTML='<span>Date · <b>'+esc(p.d)+'</b></span><span>Venue · <b>'+esc(p.v)+'</b></span>';
+  $('#modalBrief').textContent=p.brief;
+  var im=$('#modalImpact');im.innerHTML='';
+  p.imp.split(/(\u20b911,000|90\+|112|99|100\+|30\+|50\+|35|25|18|24|10 km|50,000\+|800\+)/).forEach(function(part){
+    if(!part)return;
+    if(/^(\u20b911,000|90\+|112|99|100\+|30\+|50\+|35|25|18|24|10 km|50,000\+|800\+)$/.test(part)){
+      var st=document.createElement('strong');st.textContent=part;im.appendChild(st);
+    }else{im.appendChild(document.createTextNode(part));}
+  });
+  $('#modalPartner').textContent=p.partner?('In partnership with '+p.partner+'.'):'';
+  modal.showModal();
+  try{history.replaceState(null,'','#'+p.slug);}catch(e){}
+}
+$('#modalClose').addEventListener('click',function(){modal.close();});
+modal.addEventListener('click',function(e){if(e.target===modal)modal.close();});
+modal.addEventListener('close',function(){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}});
+
+/* filters */
+var chips=$$('.fchip');
+function applyFilter(key){
+  var count=0;
+  $$('.pcard',grid).forEach(function(card){
+    var show=(key==='all')||(card.getAttribute('data-p')===key);
+    card.style.display=show?'':'none';
+    if(show)count++;
+  });
+  $('#empty').style.display=count?'none':'block';
+  chips.forEach(function(c){c.setAttribute('aria-pressed',String(c.getAttribute('data-p')===key));});
+}
+chips.forEach(function(c){
+  c.addEventListener('click',function(){
+    applyFilter(c.getAttribute('data-p'));
+    try{history.replaceState(null,'',location.pathname+'?pillar='+c.getAttribute('data-p'));}catch(e){}
+  });
+});
+
+/* deep links */
+var params=new URLSearchParams(location.search);
+var qp=params.get('pillar');
+if(qp&&$$('.fchip[data-p="'+qp+'"]').length){applyFilter(qp);}
+var hash=decodeURIComponent(location.hash.slice(1));
+if(hash){
+  var hit=PROJECTS.filter(function(p){return p.slug===hash})[0];
+  if(hit)setTimeout(function(){openProject(hit);},250);
+}
+})();
+</script>
+</body>
+</html>

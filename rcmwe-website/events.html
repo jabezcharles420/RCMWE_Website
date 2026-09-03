@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1424">
+<title>Events — Rotaract Club of Mumbai Western Elite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:oklch(0.17 0.028 262);--surface:oklch(0.215 0.032 262);--fg:oklch(0.965 0.006 90);
+  --muted:oklch(0.72 0.02 255);--border:oklch(0.31 0.025 262);
+  --accent-a:#ffc5dc;--accent-b:#fd86db;--ember:#e44f21;
+  --grad-dawn:linear-gradient(180deg,#ffc5dc 0%,#fd86db 58%,#e44f21 130%);
+  --font-display:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --font-body:'Inter',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --orb-reveal:cubic-bezier(.16,1,.3,1);--orb-soft:cubic-bezier(.25,.8,.28,1);
+  --nav-h:76px;--gut:clamp(20px,3.5vw,55px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent-b);color:#14101c}
+:focus-visible{outline:2px solid var(--accent-b);outline-offset:3px;border-radius:4px}
+img,svg{display:block}a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.wrap{width:min(1240px,calc(100% - var(--gut)*2));margin-inline:auto}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:0}
+.eyebrow .tick{color:var(--ember)}
+
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:40;border-bottom:1px solid transparent;background:transparent;transition:background .35s var(--orb-soft),border-color .35s var(--orb-soft)}
+.site-nav.scrolled{background:oklch(0.17 0.028 262 / .78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom-color:var(--border)}
+.nav-inner{display:flex;align-items:center;gap:clamp(16px,2.4vw,34px);height:var(--nav-h)}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto;min-width:0}
+.brand-seal{flex:0 0 auto;display:block;width:50px;height:50px}
+.brand-seal img{width:100%;height:100%;object-fit:contain}
+.brand-text strong{display:block;font-family:var(--font-display);font-weight:400;font-size:18px;line-height:1.1;white-space:nowrap}
+.brand-text small{display:block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.nav-links{display:flex;align-items:center;gap:clamp(12px,1.8vw,28px)}
+.nav-links a{position:relative;font-size:14px;font-weight:500;color:var(--muted);padding:9px 2px;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:4px;height:1px;background:var(--ember);transition:right .32s var(--orb-reveal)}
+.nav-links a:hover,.nav-links a[data-active]{color:var(--fg)}
+.nav-links a:hover::after,.nav-links a[data-active]::after{right:0}
+.pill-cta{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:999px;background:oklch(0.97 0.004 90);color:#12151f;font-weight:600;font-size:14px;transition:transform .28s var(--orb-soft),background .25s}
+.pill-cta:hover{transform:scale(1.04);background:oklch(0.90 0.006 90)}
+.burger{display:none;width:46px;height:46px;border-radius:50%;background:oklch(0.97 0.004 90);place-items:center;gap:5px;flex-direction:column;margin-left:auto}
+.burger span{display:block;width:18px;height:2px;background:#12151f;border-radius:2px}
+.scrim{position:fixed;inset:0;z-index:49;background:oklch(0.08 0.02 262 / .6);opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;top:0;right:0;bottom:0;z-index:50;width:min(370px,90vw);background:oklch(0.19 0.03 262 / .82);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);border-left:1px solid var(--border);padding:26px 28px;display:flex;flex-direction:column;transform:translateX(102%);transition:transform .45s var(--orb-reveal)}
+.sheet.open{transform:none}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+.sheet-close{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;font-size:18px}
+.sheet-links{display:flex;flex-direction:column}
+.sheet-links a{font-family:var(--font-display);font-size:34px;line-height:1.35;padding:6px 0;border-bottom:1px solid oklch(0.31 0.025 262 / .5)}
+.sheet-links a span{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--muted);vertical-align:super;margin-right:10px}
+.sheet-links a[data-active]{background:var(--grad-dawn);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sheet-join{margin-top:28px;display:inline-flex;justify-content:center;align-items:center;height:52px;border-radius:999px;background:oklch(0.97 0.004 90);color:#12151f;font-weight:600}
+.sheet-meta{margin-top:auto;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:2}
+
+.page-hero{padding-top:calc(var(--nav-h) + clamp(48px,9svh,110px));padding-bottom:clamp(24px,3.4vw,40px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,3.2vw,52px);align-items:center}
+.hero-copy{order:2}.tapewrap{order:1}
+.page-title{font-family:var(--font-display);font-weight:400;font-size:clamp(42px,6.6vw,92px);line-height:1;letter-spacing:-0.015em;margin:16px 0 0;max-width:14ch}
+.page-title em{font-style:italic;background:var(--grad-dawn);-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-sub{color:var(--muted);max-width:50ch;margin-top:20px;font-size:clamp(15.5px,1.3vw,18px)}
+
+/* ---- season date-tapes ---- */
+.tapewrap{order:1;width:clamp(300px,31vw,450px);display:flex;flex-direction:column;gap:16px;user-select:none;-webkit-user-select:none}
+.tp-cap{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px}
+.tp-cap::after{content:"";flex:1;height:1px;background:var(--border)}
+.tape-row{overflow:hidden;cursor:grab;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);touch-action:pan-y}
+.tape-row.grabbing{cursor:grabbing}
+.tape-track{display:flex;width:max-content;padding-block:3px;will-change:transform}
+.tp-item{display:inline-flex;align-items:center;gap:10px;margin-right:12px;padding:13px 17px;
+  border:1px solid var(--border);border-radius:999px;white-space:nowrap;
+  background:linear-gradient(180deg,oklch(0.205 0.03 262/.75),oklch(0.185 0.028 262/.35));
+  font-size:13px;font-weight:500;color:var(--fg);transition:border-color .25s,background .25s}
+.tp-item:hover{border-color:oklch(0.47 0.05 330);background:oklch(0.225 0.034 262)}
+.tp-item b{font-family:var(--font-mono);font-weight:500;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-b)}
+.tp-item i{color:var(--muted);font-style:normal;transition:transform .3s var(--orb-reveal)}
+.tp-item:hover i{transform:translate(2px,-2px);color:var(--fg)}
+
+@media (max-width:780px){
+  .page-hero{grid-template-columns:1fr;gap:28px}
+  .hero-copy{order:1}.tapewrap{order:2;width:min(380px,92vw);margin-inline:0}
+}
+
+.togglebar{display:inline-flex;gap:6px;padding:6px;border:1px solid var(--border);border-radius:999px;margin-block:clamp(20px,3vw,36px) clamp(26px,3.4vw,44px);background:oklch(0.185 0.028 262 / .7)}
+.tbtn{height:44px;padding:0 22px;border-radius:999px;font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .25s,background .25s}
+.tbtn b{font-weight:500;color:inherit}
+.tbtn:hover{color:var(--fg)}
+.tbtn[aria-pressed="true"]{background:oklch(0.94 0.02 340);color:#201321}
+
+.nextup{display:block;border:1px solid oklch(0.4 0.06 20 / .55);border-radius:22px;padding:clamp(28px,3.6vw,46px);max-width:880px;
+  background:radial-gradient(120% 140% at 88% -12%,oklch(0.34 0.09 25 / .3),transparent 58%),oklch(0.2 0.03 262 / .7);
+  transition:border-color .3s,transform .45s var(--orb-reveal)}
+.nextup:hover{border-color:oklch(0.55 0.09 25);transform:translateY(-4px)}
+.live-dot{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg);margin-bottom:16px}
+.live-dot i{width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 0 oklch(0.66 0.19 29 / .6);animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 11px oklch(0.66 0.19 29 / 0)}100%{box-shadow:0 0 0 0 oklch(0.66 0.19 29 / 0)}}
+.nextup h2{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,3.6vw,50px);line-height:1.04;margin:0 0 12px}
+.nextup p{color:var(--muted);font-size:15px;max-width:52ch;margin:0 0 18px}
+.nextup .when{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg)}
+.up-empty-note{color:var(--muted);font-size:14.5px;margin-top:18px}
+
+.month{display:grid;grid-template-columns:150px 1fr;gap:clamp(16px,3vw,44px);margin-bottom:clamp(34px,4vw,54px)}
+.m-label{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding-top:20px;position:sticky;top:calc(var(--nav-h) + 12px);align-self:start}
+.rows{border-top:1px solid var(--border)}
+.row{display:grid;grid-template-columns:92px 1fr auto 22px;align-items:center;gap:clamp(12px,2vw,26px);padding-block:18px;border-bottom:1px solid var(--border);transition:background .25s,padding-left .3s var(--orb-reveal)}
+.row:hover{background:oklch(0.205 0.032 262 / .6);padding-left:10px}
+.r-date{text-align:left;line-height:1.05}
+.r-date b{font-family:var(--font-display);font-weight:400;font-size:30px;display:block}
+.r-date span{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.r-body h3{font-family:var(--font-display);font-weight:400;font-size:21.5px;line-height:1.15;margin:0 0 3px}
+.r-body p{margin:0;color:var(--muted);font-size:13px}
+.chip{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.status{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.status.done{color:var(--muted)}
+.row .arr{color:var(--muted);transition:transform .35s var(--orb-reveal),color .25s}
+.row:hover .arr{transform:translate(3px,-3px);color:var(--accent-b)}
+
+footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022 262);margin-top:clamp(56px,8vw,110px)}
+.foot-grid{display:grid;grid-template-columns:1.5fr .7fr .8fr;gap:clamp(28px,4vw,56px);padding-block:clamp(48px,6vw,72px) 44px}
+.foot-brand strong{display:block;font-family:var(--font-display);font-weight:400;font-size:26px;margin:16px 0 8px}
+.foot-brand p{color:var(--muted);font-size:14px;max-width:34ch;margin:0}
+.foot-col h4{font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;font-weight:500}
+.foot-col a,.foot-col span{display:block;padding:6px 0;font-size:14.5px;color:var(--muted);transition:color .25s}
+.foot-col a:hover{color:var(--fg)}
+.pending{color:var(--muted)!important;font-style:italic}
+.foot-meta{display:flex;flex-wrap:wrap;gap:8px 26px;justify-content:space-between;border-top:1px solid var(--border);padding-block:20px 26px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .75s var(--orb-soft),transform .75s var(--orb-reveal)}
+[data-reveal].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1!important;transform:none!important;transition:none}
+  html{scroll-behavior:auto}.live-dot i{animation:none}
+}
+@media (max-width:920px){
+  .nav-links,.pill-cta{display:none}.burger{display:flex}
+}
+@media (max-width:700px){
+  .month{grid-template-columns:1fr}
+  .m-label{position:static;padding-top:0}
+  .row{grid-template-columns:64px 1fr;grid-template-rows:auto auto}
+  .chip,.row .arr{display:none}
+  .r-date b{font-size:24px}
+}
+</style>
+</head>
+<body data-page="events">
+
+<header class="site-nav" id="siteNav" data-od-id="site-nav">
+  <div class="nav-inner wrap">
+    <a class="brand" href="index.html" data-od-id="brand-home">
+      <span class="brand-seal"><img src="assets/logo.svg" alt=""></span>
+      <span class="brand-text"><strong>Mumbai Western Elite</strong><small>Rotaract · RID 3141</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="events.html" data-active data-od-id="nav-events">Events</a>
+      <a href="people.html">People</a>
+    </nav>
+    <a class="pill-cta" href="join.html" data-od-id="nav-join">Join Us</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<aside class="sheet" id="sheet" aria-label="Menu">
+  <div class="sheet-head">
+    <span class="brand-seal"><img src="assets/logo.svg" alt=""></span>
+    <button class="sheet-close" id="sheetClose" aria-label="Close menu">✕</button>
+  </div>
+  <nav class="sheet-links" aria-label="Mobile">
+    <a href="home.html"><span>01</span>Home</a>
+    <a href="about.html"><span>02</span>About</a>
+    <a href="impact.html"><span>03</span>Impact</a>
+    <a href="events.html" data-active><span>04</span>Events</a>
+    <a href="people.html"><span>05</span>People</a>
+    <a href="join.html"><span>06</span>Join</a>
+  </nav>
+  <a class="sheet-join" href="join.html">Join RCMWE</a>
+  <p class="sheet-meta">Rotaract Club of Mumbai<br>Western Elite · RID 3141<br>Est. June 2016</p>
+</aside>
+
+<main id="main">
+  <section class="page-hero wrap" data-od-id="events-hero">
+    <div class="tapewrap" id="dateTape" data-reveal data-od-id="hero-date-tapes">
+      <p class="tp-cap">The season on tape · drag</p>
+      <div class="tape-row" data-dir="-1" data-speed="0.5">
+        <div class="tape-track"></div>
+      </div>
+      <div class="tape-row" data-dir="1" data-speed="0.34">
+        <div class="tape-track"></div>
+      </div>
+    </div>
+
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="tick">●</span>&nbsp;&nbsp;Club calendar · July–August 2026</p>
+      <h1 class="page-title" data-od-id="events-title">Sixty days, <em>fully logged.</em></h1>
+      <p class="page-sub">Every drive, tournament and session from the Dawn of Impact year so far — dated, placed and linked to its full record.</p>
+    </div>
+
+    <div class="togglebar" role="group" aria-label="Filter events by timing" data-od-id="event-toggle" style="grid-column:1/-1;justify-self:start;margin-block:14px 0">
+      <button class="tbtn" id="btnUpcoming" aria-pressed="true">Upcoming <b>· 1</b></button>
+      <button class="tbtn" id="btnPast" aria-pressed="false">Past <b>· 11</b></button>
+    </div>
+  </section>
+
+  <section class="wrap" id="viewUpcoming" data-od-id="upcoming-view">
+    <a class="nextup" href="impact.html#saviorthon" data-od-id="nextup-saviorthon">
+      <span class="live-dot"><i aria-hidden="true"></i>Next up · Tomorrow</span>
+      <h2>Saviorthon 10K — Run for Nature</h2>
+      <p>A charity marathon at Bandra Fort in association with 4Memories Event and Saksham Social Trust. Dedicated runner-registration funds are channelled toward women's empowerment initiatives.</p>
+      <span class="when">Sunday, 23 August 2026 · Bandra Fort</span>
+    </a>
+    <p class="up-empty-note">The September calendar is announced at the first weekly meeting of the month.</p>
+  </section>
+
+  <section class="wrap" id="viewPast" data-od-id="past-view" hidden>
+    <div class="month" data-od-id="month-august">
+      <div class="m-label">August<br>2026</div>
+      <div class="rows">
+        <a class="row" href="impact.html#freedom-bins" data-od-id="event-freedom-bins">
+          <span class="r-date"><b>15</b><span>Sat · Aug</span></span>
+          <span class="r-body"><h3>Freedom Bins — Civic Waste Management</h3><p>Oberoi Mall &amp; Goregaon East · Swachh Bharat campaign</p></span>
+          <span class="chip">Civic Action</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#game-night" data-od-id="event-game-night">
+          <span class="r-date"><b>09</b><span>Sun · Aug</span></span>
+          <span class="r-body"><h3>Game Night &amp; House Championship Launch</h3><p>Club game night · four houses, year-long league begins</p></span>
+          <span class="chip">Fellowship</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="month" data-od-id="month-july">
+      <div class="m-label">July<br>2026</div>
+      <div class="rows">
+        <a class="row" href="impact.html#turf-wars" data-od-id="event-turf-wars">
+          <span class="r-date"><b>19</b><span>Sun · Jul</span></span>
+          <span class="r-body"><h3>Turf Wars</h3><p>Nidhivan Turf · football and cricket mornings</p></span>
+          <span class="chip">Sports</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#digital-id-rights" data-od-id="event-digital-id">
+          <span class="r-date"><b>13·16</b><span>Mon·Thu · Jul</span></span>
+          <span class="r-body"><h3>Grassroots Digital ID &amp; Legal Rights Assistance</h3><p>Western suburbs transit hubs · two-session drive</p></span>
+          <span class="chip">Legal Aid</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#seva-mahotsav" data-od-id="event-seva-mahotsav">
+          <span class="r-date"><b>15</b><span>Wed · Jul</span></span>
+          <span class="r-body"><h3>Promotion of Seva Mahotsav</h3><p>Digital campaign with creator Yashvi (@yashvii_a)</p></span>
+          <span class="chip">Digital Reach</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#empowerment-abled" data-od-id="event-empowerment">
+          <span class="r-date"><b>14</b><span>Tue · Jul</span></span>
+          <span class="r-body"><h3>Empowerment for Specially Abled Individuals</h3><p>Shashi Mangalam School · inclusive life-skills camp</p></span>
+          <span class="chip">Welfare</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#plantation-2" data-od-id="event-plantation">
+          <span class="r-date"><b>12</b><span>Sun · Jul</span></span>
+          <span class="r-body"><h3>Mega Plantation Drive 2.0</h3><p>Near Aarey Dairy · with our parent Rotary club</p></span>
+          <span class="chip">Climate</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#aarey-drive" data-od-id="event-aarey">
+          <span class="r-date"><b>11</b><span>Sat · Jul</span></span>
+          <span class="r-body"><h3>Mega Aarey Youth &amp; Child Welfare Drive</h3><p>Aarey Milk Colony · with The Altruist Hotels</p></span>
+          <span class="chip">Welfare</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#baaghbaan" data-od-id="event-baaghbaan">
+          <span class="r-date"><b>08</b><span>Wed · Jul</span></span>
+          <span class="r-body"><h3>Baaghbaan — Senior Citizen Outreach</h3><p>Assisi Bhavan, Aarey Road · music, games and gift packs</p></span>
+          <span class="chip">Elder Care</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#muskaan-stall" data-od-id="event-muskaan">
+          <span class="r-date"><b>04</b><span>Sat · Jul</span></span>
+          <span class="r-body"><h3>Muskaan Exhibition Stall</h3><p>NESCO, Goregaon · 12-hour Rotary-led exhibition</p></span>
+          <span class="chip">Fundraising</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+        <a class="row" href="impact.html#pranic-healing" data-od-id="event-pranic">
+          <span class="r-date"><b>03</b><span>Fri · Jul</span></span>
+          <span class="r-body"><h3>Pranic Healing &amp; Wellness Session</h3><p>Tulip Hall, DB Woods · breathing and stress relief</p></span>
+          <span class="chip">Wellness</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot" data-od-id="site-footer">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <span class="brand-seal"><img src="assets/logo.svg" alt="RCMWE emblem"></span>
+      <strong>Rotaract Club of Mumbai Western Elite</strong>
+      <p>"Be the Dawn. Make the Impact." — sponsored by the Rotary Club of Mumbai Western Elite, RID 3141.</p>
+    </div>
+    <div class="foot-col" data-od-id="footer-navigate">
+      <h4>Navigate</h4>
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="events.html">Events</a>
+      <a href="people.html">People</a>
+      <a href="join.html">Join</a>
+    </div>
+    <div class="foot-col" data-od-id="footer-connect">
+      <h4>The club</h4>
+      <span>RI District 3141</span>
+      <span>Parent: Rotary Club of Mumbai Western Elite</span>
+      <span class="pending">Instagram — handle announced soon</span>
+      <a href="join.html">Membership enquiries</a>
+    </div>
+  </div>
+  <div class="wrap foot-meta" data-od-id="footer-meta">
+    <span>© 2026 RCMWE · Club ID 213639</span>
+    <span>Chartered June 2016</span>
+    <span>Design prototype · figures from club records</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,c){return (c||document).querySelector(s)};
+var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var nav=$('#siteNav');
+function navState(){nav.classList.toggle('scrolled',window.scrollY>8);}
+window.addEventListener('scroll',navState,{passive:true});navState();
+var burger=$('#burger'),sheet=$('#sheet'),scrim=$('#scrim'),closeBtn=$('#sheetClose');
+var mainEls=$$('#main > *');
+function setInert(on){mainEls.forEach(function(el){try{el.toggleAttribute('inert',on);}catch(e){}});}
+function openSheet(){sheet.classList.add('open');scrim.classList.add('open');burger.setAttribute('aria-expanded','true');setInert(true);closeBtn.focus();}
+function closeSheet(){sheet.classList.remove('open');scrim.classList.remove('open');burger.setAttribute('aria-expanded','false');setInert(false);burger.focus();}
+burger.addEventListener('click',openSheet);
+closeBtn.addEventListener('click',closeSheet);
+scrim.addEventListener('click',closeSheet);
+document.addEventListener('keydown',function(e){
+  if(!sheet.classList.contains('open'))return;
+  if(e.key==='Escape'){closeSheet();return;}
+  if(e.key==='Tab'){
+    var f=$$('a[href],button',sheet).filter(function(el){return el.offsetParent!==null});
+    if(!f.length)return;
+    var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
+/* upcoming / past toggle */
+var bUp=$('#btnUpcoming'),bPast=$('#btnPast'),vUp=$('#viewUpcoming'),vPast=$('#viewPast');
+function setView(mode){
+  var up=(mode==='up');
+  vUp.hidden=!up;vPast.hidden=up;
+  bUp.setAttribute('aria-pressed',String(up));
+  bPast.setAttribute('aria-pressed',String(!up));
+}
+bUp.addEventListener('click',function(){setView('up');});
+bPast.addEventListener('click',function(){setView('past');});
+/* ---------- season date-tapes ---------- */
+(function(){
+  var wrap=$('#dateTape');if(!wrap)return;
+  var ROWS=[
+    {dir:-1,speed:0.5,events:[
+      ['03 JUL','pranic-healing','Pranic Healing'],
+      ['04 JUL','muskaan-stall','Muskaan Stall'],
+      ['08 JUL','baaghbaan','Baaghbaan'],
+      ['11 JUL','aarey-drive','Aarey Welfare Drive'],
+      ['12 JUL','plantation-2','Plantation 2.0'],
+      ['13·16 JUL','digital-id-rights','Digital ID & Legal Rights']
+    ]},
+    {dir:1,speed:0.34,events:[
+      ['14 JUL','empowerment-abled','Specially Abled Camp'],
+      ['15 JUL','seva-mahotsav','Seva Mahotsav Promo'],
+      ['19 JUL','turf-wars','Turf Wars'],
+      ['09 AUG','game-night','Game Night · Houses'],
+      ['15 AUG','freedom-bins','Freedom Bins'],
+      ['23 AUG','saviorthon','Saviorthon 10K']
+    ]}
+  ];
+  var rows=[];
+  $$('.tape-row',wrap).forEach(function(rowEl,i){
+    var cfg=ROWS[i],track=$('.tape-track',rowEl);
+    if(!cfg||!track)return;
+    var html='';
+    for(var c=0;c<3;c++){
+      cfg.events.forEach(function(ev){
+        html+='<a class="tp-item" href="impact.html#'+ev[1]+'" data-od-id="tape-'+ev[1]+'-'+c+'"><b>'+ev[0]+'</b><span>'+ev[2]+'</span><i aria-hidden="true">↗</i></a>';
+      });
+    }
+    track.innerHTML=html;
+    rows.push({el:rowEl,track:track,dir:cfg.dir,speed:cfg.speed,pos:0,vel:0,w:0,drag:false});
+  });
+  function measure(){rows.forEach(function(r){r.w=r.track.scrollWidth/3;});}
+  measure();window.addEventListener('resize',measure,{passive:true});
+  rows.forEach(function(r){
+    r.el.addEventListener('pointerdown',function(e){
+      if(e.target.closest('a')&&e.pointerType==='mouse'){/* allow drag from link too */}
+      r.drag=true;r.sx=e.clientX;r.sp=r.pos;r.moved=0;
+      r.el.classList.add('grabbing');
+      try{r.el.setPointerCapture(e.pointerId);}catch(err){}
+    });
+    r.el.addEventListener('pointermove',function(e){
+      if(!r.drag)return;
+      var d=e.clientX-r.sx;r.moved=Math.max(r.moved,Math.abs(d));
+      var np=r.sp+d;
+      r.vel=np-r.pos;
+      r.pos=np;
+    });
+    function endDrag(e){
+      if(!r.drag)return;
+      r.drag=false;r.el.classList.remove('grabbing');
+      /* click fires right after pointerup, before any timeout — flag synchronously */
+      if(r.moved>8){r.suppress=true;setTimeout(function(){r.suppress=false;},90);}
+    }
+    r.el.addEventListener('pointerup',endDrag);
+    r.el.addEventListener('pointercancel',endDrag);
+    r.el.addEventListener('click',function(e){if(r.suppress){e.preventDefault();e.stopPropagation();}},true);
+    r.el.addEventListener('mouseenter',function(){r.hover=true;});
+    r.el.addEventListener('mouseleave',function(){r.hover=false;});
+  });
+  var t=0,tapeRAF=null,tapeVis=true;
+  function frame(){
+    tapeRAF=null;if(!tapeVis)return;
+    t+=0.016;
+    rows.forEach(function(r){
+      var base=reduced?0:r.dir*r.speed*(r.hover?0.18:1);
+      if(!r.drag){
+        r.vel*=0.93;
+        r.pos+=(base+r.vel);
+      }
+      if(r.w>0){
+        if(r.pos<=-r.w)r.pos+=r.w;
+        while(r.pos>0)r.pos-=r.w;
+      }
+      var skew=reduced?0:Math.max(-7,Math.min(7,r.vel*0.55+base*2.2));
+      r.track.style.transform='translateX('+r.pos.toFixed(1)+'px) skewX('+skew.toFixed(2)+'deg)';
+    });
+    tapeRAF=requestAnimationFrame(frame);
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        tapeVis=en.isIntersecting;
+        if(tapeVis&&!tapeRAF)tapeRAF=requestAnimationFrame(frame);
+      });
+    },{threshold:0}).observe(wrap);
+  }else{frame();}
+})();
+
+$$('[data-reveal]').forEach(function(el){el.classList.add('in')});
+})();
+</script>
+</body>
+</html>
