@@ -148,6 +148,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
   .chip,.row .arr{display:none}
   .r-date b{font-size:24px}
 }
+.pill-cta,.btn-ghost,.chip,.sec-link{white-space:nowrap}
 </style>
 </head>
 <body data-page="events">
@@ -159,7 +160,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
       <span class="brand-text"><strong>Mumbai Western Elite</strong><small>Rotaract · RID 3141</small></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="home.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="impact.html">Impact</a>
       <a href="events.html" data-active data-od-id="nav-events">Events</a>
@@ -177,7 +178,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
     <button class="sheet-close" id="sheetClose" aria-label="Close menu">✕</button>
   </div>
   <nav class="sheet-links" aria-label="Mobile">
-    <a href="home.html"><span>01</span>Home</a>
+    <a href="index.html"><span>01</span>Home</a>
     <a href="about.html"><span>02</span>About</a>
     <a href="impact.html"><span>03</span>Impact</a>
     <a href="events.html" data-active><span>04</span>Events</a>
@@ -207,25 +208,26 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
     </div>
 
     <div class="togglebar" role="group" aria-label="Filter events by timing" data-od-id="event-toggle" style="grid-column:1/-1;justify-self:start;margin-block:14px 0">
-      <button class="tbtn" id="btnUpcoming" aria-pressed="true">Upcoming <b>· 1</b></button>
-      <button class="tbtn" id="btnPast" aria-pressed="false">Past <b>· 11</b></button>
+      <button class="tbtn" id="btnUpcoming" aria-pressed="false">Upcoming <b>· 0</b></button>
+      <button class="tbtn" id="btnPast" aria-pressed="true">Past <b>· 12</b></button>
     </div>
   </section>
 
-  <section class="wrap" id="viewUpcoming" data-od-id="upcoming-view">
-    <a class="nextup" href="impact.html#saviorthon" data-od-id="nextup-saviorthon">
-      <span class="live-dot"><i aria-hidden="true"></i>Next up · Tomorrow</span>
-      <h2>Saviorthon 10K — Run for Nature</h2>
-      <p>A charity marathon at Bandra Fort in association with 4Memories Event and Saksham Social Trust. Dedicated runner-registration funds are channelled toward women's empowerment initiatives.</p>
-      <span class="when">Sunday, 23 August 2026 · Bandra Fort</span>
-    </a>
-    <p class="up-empty-note">The September calendar is announced at the first weekly meeting of the month.</p>
+  <section class="wrap" id="viewUpcoming" data-od-id="upcoming-view" hidden>
+    <!-- Add upcoming events here using the .nextup card markup -->
+    <p class="up-empty-note">No upcoming events announced yet. The next calendar is shared at the first weekly meeting of the month.</p>
   </section>
 
-  <section class="wrap" id="viewPast" data-od-id="past-view" hidden>
+  <section class="wrap" id="viewPast" data-od-id="past-view">
     <div class="month" data-od-id="month-august">
       <div class="m-label">August<br>2026</div>
       <div class="rows">
+        <a class="row" href="impact.html#saviorthon" data-od-id="event-saviorthon">
+          <span class="r-date"><b>23</b><span>Sun · Aug</span></span>
+          <span class="r-body"><h3>Saviorthon 10K — Run for Nature</h3><p>Bandra Fort · with 4Memories Event &amp; Saksham Social Trust</p></span>
+          <span class="chip">Climate</span><span class="status done">Completed</span>
+          <span class="arr" aria-hidden="true">↗</span>
+        </a>
         <a class="row" href="impact.html#freedom-bins" data-od-id="event-freedom-bins">
           <span class="r-date"><b>15</b><span>Sat · Aug</span></span>
           <span class="r-body"><h3>Freedom Bins — Civic Waste Management</h3><p>Oberoi Mall &amp; Goregaon East · Swachh Bharat campaign</p></span>
@@ -311,7 +313,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
     </div>
     <div class="foot-col" data-od-id="footer-navigate">
       <h4>Navigate</h4>
-      <a href="home.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="impact.html">Impact</a>
       <a href="events.html">Events</a>
@@ -329,7 +331,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
   <div class="wrap foot-meta" data-od-id="footer-meta">
     <span>© 2026 RCMWE · Club ID 213639</span>
     <span>Chartered June 2016</span>
-    <span>Design prototype · figures from club records</span>
+    <span>Figures from club records</span>
   </div>
 </footer>
 

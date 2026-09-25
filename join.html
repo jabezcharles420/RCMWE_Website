@@ -207,6 +207,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
   .frow{grid-template-columns:1fr}
   .faq-a p{padding-right:0}
 }
+.pill-cta,.btn-ghost,.chip,.sec-link{white-space:nowrap}
 </style>
 </head>
 <body data-page="join">
@@ -218,7 +219,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
       <span class="brand-text"><strong>Mumbai Western Elite</strong><small>Rotaract · RID 3141</small></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="home.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="impact.html">Impact</a>
       <a href="events.html">Events</a>
@@ -236,7 +237,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
     <button class="sheet-close" id="sheetClose" aria-label="Close menu">✕</button>
   </div>
   <nav class="sheet-links" aria-label="Mobile">
-    <a href="home.html"><span>01</span>Home</a>
+    <a href="index.html"><span>01</span>Home</a>
     <a href="about.html"><span>02</span>About</a>
     <a href="impact.html"><span>03</span>Impact</a>
     <a href="events.html"><span>04</span>Events</a>
@@ -418,7 +419,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
         <div class="form-ok" id="formOk" tabindex="-1" data-od-id="join-success">
           <span class="ok-badge"><svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 14 L10 20 L22 6" stroke="#fd86db" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <h3>You're on the <em>dawn list.</em></h3>
-          <p>In the live site, the Secretary would reach out within a week with the next weekly-meeting invite. This prototype stores nothing — refresh or reset to try again.</p>
+          <p>Our Secretary will reach out within a week with an invite to the next weekly meeting.</p>
           <span class="echo" id="okEcho"></span>
           <br>
           <button type="button" class="reset-link" id="resetForm">Back to the form</button>
@@ -468,7 +469,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
     </div>
     <div class="foot-col" data-od-id="footer-navigate">
       <h4>Navigate</h4>
-      <a href="home.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="impact.html">Impact</a>
       <a href="events.html">Events</a>
@@ -486,7 +487,7 @@ footer.site-foot{border-top:1px solid var(--border);background:oklch(0.145 0.022
   <div class="wrap foot-meta" data-od-id="footer-meta">
     <span>© 2026 RCMWE · Club ID 213639</span>
     <span>Chartered June 2016</span>
-    <span>Design prototype · figures from club records</span>
+    <span>Figures from club records</span>
   </div>
 </footer>
 
@@ -521,7 +522,11 @@ document.addEventListener('keydown',function(e){
   }
 });
 
-/* ---------- form validation (demo only) ---------- */
+/* ---------- join form ----------
+   Paste a form endpoint (e.g. Formspree / Getform / Google Apps Script URL) to go live.
+   Leave empty and the form validates and shows the success panel without sending. */
+var FORM_ENDPOINT='';
+if(FORM_ENDPOINT){$('.demo-note,.form-foot,.ok-demo').forEach(function(el){el.hidden=true;});}
 var form=$('#joinForm'),okPanel=$('#formOk'),okEcho=$('#okEcho');
 function setErr(key,on){
   var wrap=$('.field[data-field="'+key+'"]');
@@ -559,10 +564,18 @@ form.addEventListener('submit',function(e){
   var nm=$('#f-name').value.trim().split(/\s+/)[0];
   var intr=$('#f-interest');
   var lbl=intr.options[intr.selectedIndex].text.toLowerCase();
-  okEcho.textContent=nm+' · '+lbl;
-  form.style.display='none';
-  okPanel.classList.add('show');
-  okPanel.focus();
+  function done(){
+    okEcho.textContent=nm+' · '+lbl;
+    form.style.display='none';
+    okPanel.classList.add('show');
+    okPanel.focus();
+  }
+  if(!FORM_ENDPOINT){done();return;}
+  var sb=form.querySelector('[type="submit"]');if(sb)sb.disabled=true;
+  fetch(FORM_ENDPOINT,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
+    .then(function(r){if(!r.ok)throw 0;done();})
+    .catch(function(){alert('Sorry — that did not go through. Please try again or message us on Instagram.');})
+    .finally(function(){if(sb)sb.disabled=false;});
 });
 $('#resetForm').addEventListener('click',function(){
   form.reset();
@@ -670,8 +683,9 @@ $$('.faq-q').forEach(function(btn){
 if('IntersectionObserver' in window && !reduced){
   var io=new IntersectionObserver(function(es){
     es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
-  },{threshold:.14});
+  },{threshold:0,rootMargin:'0px 0px -6% 0px'});
   $$('[data-reveal]').forEach(function(el){io.observe(el)});
+  setTimeout(function(){$$('[data-reveal]').forEach(function(el){el.classList.add('in')})},3000);
 }else{$$('[data-reveal]').forEach(function(el){el.classList.add('in')});}
 })();
 </script>
